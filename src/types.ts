@@ -1,5 +1,11 @@
-export interface Configuration {
+export interface Configuration extends AuthenticationParameters {
   portalPath: string;
+  assets: {
+    [assetName: string]: Asset;
+  };
+}
+
+export interface AuthenticationParameters {
   environmentUrl: string;
   credentials: {
     clientId: string;
@@ -7,14 +13,12 @@ export interface Configuration {
     authority: string;
     tenantId: string;
   };
-  assets: {
-    [assetName: string]: Asset;
-  };
 }
 
 export interface Asset {
-  type: AssetType;
-  name: string;
+  entityLogicalName: AssetEntityLogicalName;
+  id: string;
+  contentAttribute: string;
 }
 
-export type AssetType = "basic-form";
+export type AssetEntityLogicalName = "adx_entityform" | "adx_webfile";
