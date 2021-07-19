@@ -30,7 +30,7 @@ jobs:
         with:
           email: gburrows@microsoft.com
           name: gburrows
-          
+          token: secrets.GITHUB_TOKEN
 
       - name: 'change version'
         uses: reedyuk/npm-version@1.1.1
