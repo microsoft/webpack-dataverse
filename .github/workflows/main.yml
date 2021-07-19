@@ -21,34 +21,16 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      - name: Configure git credentials
-        uses: OleksiyRudenko/gha-git-credentials@v2
+      - name:  'Automated Version Bump'
+        uses:  'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          email: gburrows@microsoft.com
-          name: gburrows
-          token: secrets.GITHUB_TOKEN
-      
-      - name: Get Latest Tag
-        id: latestTag
-        uses: WyriHaximus/github-action-get-previous-tag@v1
-        
-      - name: Simple Semver
-        id: semver
-        uses: matt-FFFFFF/simple-semver@v0.1.0
-        with:
-          semver-input: steps.latestTag.outputs.tag
-          increment: github.event.pull_request.labels.*.name
+          skip-tag:  'true'
 
-      - name: 'change version'
-        uses: reedyuk/npm-version@1.1.1
-        with:
-          version: steps.semver.outputs.semver
-          
       - name: Tag
         uses: K-Phoen/semver-release-action@master
         with:
-          release_branch: main
+          release_branch: master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
