@@ -1,4 +1,4 @@
-# webpack-dev-dataverse
+# webpack-dataverse
 
 #TODO: Write documentation for this library.
 

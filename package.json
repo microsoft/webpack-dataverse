@@ -1,5 +1,5 @@
 {
-  "name": "@microsoft/webpack-dev-dataverse",
+  "name": "@microsoft/webpack-dataverse",
   "version": "1.0.0",
   "description": "",
   "bin": {
