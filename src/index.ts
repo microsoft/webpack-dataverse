@@ -2,10 +2,10 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import { authenticate } from "./api/authentication";
 import attachDataverseConfigToCompiler from "./cli/attachDataverseConfigToCompiler";
 import buildCompiler from "./cli/buildCompiler";
-import buildDataverseConfig from "./cli/buildDataverseConfig";
+import getDataverseConfig from "./cli/getDataverseConfig";
 
-const dataverseConfig = buildDataverseConfig();
+const dataverseConfig = getDataverseConfig();
 authenticate(dataverseConfig);
-const compiler = buildCompiler();
+const compiler = buildCompiler(dataverseConfig);
 attachDataverseConfigToCompiler(dataverseConfig, compiler);
 webpackDevMiddleware(compiler);

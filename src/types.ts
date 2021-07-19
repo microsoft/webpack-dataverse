@@ -1,7 +1,8 @@
 export interface Configuration extends AuthenticationParameters {
+  srcPath: string;
   portalPath: string;
   assets: {
-    [assetName: string]: Asset;
+    [assetName: string]: string;
   };
 }
 
@@ -21,4 +22,15 @@ export interface Asset {
   contentAttribute: string;
 }
 
-export type AssetEntityLogicalName = "adx_entityform" | "adx_webfile";
+export type AssetEntityLogicalName =
+  | "adx_entityform"
+  | "adx_webfile"
+  | "adx_webformstep";
+
+export interface BasicForm {
+  adx_entityformid: string;
+}
+
+export interface AdvancedFormStep {
+  adx_webformstepid: string;
+}

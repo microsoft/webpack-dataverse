@@ -10,9 +10,14 @@ export default async function updateRecord(
   const environmentUrl = getEnvironmentUrl();
   const url = `${environmentUrl}api/data/v9.2/${collectionName}(${id})`;
   const headers = await getHeaders();
-  await fetch(url, {
+  const response = await fetch(url, {
     headers,
     method: "PATCH",
     body: JSON.stringify(properties),
   });
+  if (!response.ok) {
+    const json = await response.json();
+    const message = json.error.message;
+    throw new Error(message);
+  }
 }
