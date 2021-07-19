@@ -24,6 +24,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      
+      - name: GitHub Script
+        uses: actions/github-script@v4.0.2
+        with:
+            script: |
+              git config --global user.email gburrows@microsoft.com
+              git config --global user.name gburrows
+            
+          
 
       - name: 'change version'
         uses: reedyuk/npm-version@1.1.1
