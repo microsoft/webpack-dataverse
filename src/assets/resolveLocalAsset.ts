@@ -1,70 +1,78 @@
 import { AdvancedFormStep, Asset, BasicForm } from "../types";
 import { join } from "path";
-import { readFile } from "fs/promises";
+import { readFileSync as readFile } from "fs";
 import yaml from "js-yaml";
 import findFile from "../util/findFile";
 
 const assets: { [name: string]: Asset } = {};
+type AssetWithoutPortalName = Omit<Asset, "portalName">;
 
-export async function resolveLocalAsset(
-  portalPath: string,
-  path: string
-): Promise<Asset> {
+export function resolveLocalAsset(portalPath: string, path: string): Asset {
   if (!assets[path]) {
     const [portalName, type, ...recordPathParts] = path.split("/");
     const basePath = join(portalPath, portalName, type);
-    let asset: Asset;
+    let asset: AssetWithoutPortalName;
     switch (type) {
       case "basic-forms":
-        asset = await resolveBasicForm(basePath, recordPathParts);
+        asset = resolveBasicForm(basePath, recordPathParts);
         break;
       case "advanced-forms":
-        asset = await resolveAdvancedForm(basePath, recordPathParts);
+        asset = resolveAdvancedForm(basePath, recordPathParts);
         break;
       default:
         throwUnsupportedAssetTypeError(type);
     }
-    assets[path] = asset;
+    assets[path] = { portalName, ...asset };
   }
 
   return assets[path];
 }
 
-async function resolveBasicForm(
+function resolveBasicForm(
   basePath: string,
   recordPathParts: string[]
-): Promise<Asset> {
+): AssetWithoutPortalName {
   const basicFormName = recordPathParts[0];
-  const yamlFilePath = await findFile(
+  const yamlFilePath = findFile(
     join(basePath, basicFormName, `${basicFormName}.basicform.yml`)
   );
-  const contents = (await readFile(yamlFilePath)).toString();
+  const javascriptFilePath = yamlFilePath.replace(
+    /\.yml$/,
+    ".custom_javascript.js"
+  );
+  const contents = readFile(yamlFilePath).toString();
   const basicForm = yaml.load(contents) as BasicForm;
   return {
     entityLogicalName: "adx_entityform",
     contentAttribute: "adx_registerstartupscript",
     id: basicForm.adx_entityformid,
+    contentFilePath: javascriptFilePath,
   };
 }
 
-async function resolveAdvancedForm(
+function resolveAdvancedForm(
   basePath: string,
   recordPathParts: string[]
-): Promise<Asset> {
+): AssetWithoutPortalName {
   const advancedFormName = recordPathParts[0];
   if (recordPathParts.length === 0) {
     throwUnsupportedAssetTypeError("advanced-forms");
   }
   const formStepName = recordPathParts[2];
-  const yamlFilePath = await findFile(
+  const yamlFilePath = findFile(
     join(basePath, ...recordPathParts, `${formStepName}.advancedformstep.yml`)
   );
-  const contents = (await readFile(yamlFilePath)).toString();
+  const javascriptFilePath = yamlFilePath.replace(
+    /\.yml$/,
+    ".custom_javascript.js"
+  );
+  const contents = readFile(yamlFilePath).toString();
   const advancedForm = yaml.load(contents) as AdvancedFormStep;
   return {
     entityLogicalName: "adx_webformstep",
     contentAttribute: "adx_registerstartupscript",
     id: advancedForm.adx_webformstepid,
+    contentFilePath: javascriptFilePath,
   };
 }
 

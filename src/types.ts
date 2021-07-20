@@ -20,6 +20,8 @@ export interface Asset {
   entityLogicalName: AssetEntityLogicalName;
   id: string;
   contentAttribute: string;
+  contentFilePath: string;
+  portalName: string;
 }
 
 export type AssetEntityLogicalName =
