@@ -1,12 +1,10 @@
-import { Configuration, EntryObject, webpack } from "webpack";
+import { EntryObject, webpack } from "webpack";
 import { resolve } from "path";
-import { Configuration as DataverseConfig } from "../types";
+import { Configuration as DataverseConfig } from "../../types";
+import getWebpackConfig from "../getWebpackConfig";
 
 export default function buildCompiler(dataverseConfig: DataverseConfig) {
-  const config = require(resolve(
-    process.cwd(),
-    "./webpack.config.js"
-  )) as Configuration;
+  const config = getWebpackConfig();
   const entry = {} as EntryObject;
   for (const srcFile of Object.keys(dataverseConfig.assets)) {
     entry[srcFile] = resolve(dataverseConfig.srcPath, srcFile);

@@ -1,6 +1,6 @@
 {
-  "name": "@microsoft/webpack-dataverse",
-  "version": "1.0.0",
+  "name": "webpack-dataverse",
+  "version": "1.0.1",
   "description": "",
   "bin": {
     "dataverse": "./dist/index.js"
@@ -24,6 +24,10 @@
     "ts-node": "^10.0.0",
     "typescript": "^4.3.5"
   },
+  "files": [
+    "dist/",
+    "SECURITY.md"
+  ],
   "scripts": {
     "build": "tsc && ts-node ./addBinComment.ts"
   },
