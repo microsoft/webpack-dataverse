@@ -2,6 +2,7 @@ import updateRecord from "../api/updateRecord";
 import { Asset } from "../types";
 import btoa from "btoa";
 import { saveWebFile } from "./web-files/saveWebFile";
+import createWebFileLoader from "./createWebFileLoader";
 
 export default async function updateAsset(asset: Asset, content: string) {
   const { entityLogicalName, id, contentAttribute } = asset;
@@ -10,10 +11,7 @@ export default async function updateAsset(asset: Asset, content: string) {
     const webFileName = `${entityLogicalName}_${id}.js`;
     await Promise.all([
       updateRecord(collectionName, id, {
-        [contentAttribute]:
-          "const scriptElement = document.createElement('script');\r\n" +
-          `scriptElement.src = "/${webFileName}";\r\n` +
-          "document.body.appendChild(scriptElement);",
+        [contentAttribute]: createWebFileLoader(webFileName),
       }),
       saveWebFile(webFileName, btoa(content)),
     ]);

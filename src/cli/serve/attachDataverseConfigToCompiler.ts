@@ -1,7 +1,7 @@
 import { Compiler } from "webpack";
-import updateAsset from "../assets/updateAsset";
-import { Configuration as DataverseConfig } from "../types";
-import { resolveLocalAsset } from "../assets/resolveLocalAsset";
+import updateAsset from "../../assets/updateAsset";
+import { Configuration as DataverseConfig } from "../../types";
+import { resolveLocalAsset } from "../../assets/resolveLocalAsset";
 
 export default function attachDataverseConfigToCompiler(
   config: DataverseConfig,
@@ -12,7 +12,7 @@ export default function attachDataverseConfigToCompiler(
     async (fileName, { content: buffer }) => {
       if (config.assets[fileName]) {
         const assetName = config.assets[fileName];
-        const asset = await resolveLocalAsset(config.portalPath, assetName);
+        const asset = resolveLocalAsset(config.portalPath, assetName);
         let content: string;
         if (asset.entityLogicalName === "adx_webfile") {
           content = Buffer.from(buffer).toString("base64");
