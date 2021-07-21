@@ -10,7 +10,9 @@ import { cwd } from "process";
 import { fileSync as findFile } from "find";
 import { default as escapeRegExp } from "escape-string-regexp";
 
-export default function getDataverseConfig(): Configuration {
+export default function getDataverseConfig(
+  development?: boolean
+): Configuration {
   const dataverseConfigPath = resolve(process.cwd(), "./dataverse.config.js");
   let config: Configuration;
   if (pathExists(dataverseConfigPath)) {
@@ -18,12 +20,17 @@ export default function getDataverseConfig(): Configuration {
   } else {
     config = {} as Configuration;
   }
-  applyDefaultConfiguration(config);
+  applyDefaultConfiguration(config, !!development);
   return config;
 }
 
-function applyDefaultConfiguration(dataverseConfig: Configuration): void {
-  applyDefaultEnvironmentVariables(dataverseConfig);
+function applyDefaultConfiguration(
+  dataverseConfig: Configuration,
+  development: boolean
+): void {
+  if (development) {
+    applyDefaultEnvironmentVariables(dataverseConfig);
+  }
   Object.assign(dataverseConfig, {
     srcPath: dataverseConfig.srcPath || "src",
     portalPath: dataverseConfig.portalPath || "portal",
