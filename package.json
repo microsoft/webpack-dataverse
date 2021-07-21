@@ -1,9 +1,9 @@
 {
   "name": "webpack-dataverse",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "bin": {
-    "dataverse": "./dist/index.js"
+    "dataverse": "dist/index.js"
   },
   "main": "dist/index.js",
   "dependencies": {
