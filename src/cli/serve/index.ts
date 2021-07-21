@@ -5,7 +5,7 @@ import attachDataverseConfigToCompiler from "./attachDataverseConfigToCompiler";
 import webpackDevMiddleware from "webpack-dev-middleware";
 
 export default function serve() {
-  const dataverseConfig = getDataverseConfig();
+  const dataverseConfig = getDataverseConfig(true);
   const compiler = buildCompiler(dataverseConfig);
   authenticate(dataverseConfig);
   attachDataverseConfigToCompiler(dataverseConfig, compiler);
