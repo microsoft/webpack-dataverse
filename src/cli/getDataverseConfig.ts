@@ -82,22 +82,22 @@ function createDefaultAssets(): AssetMap {
   for (const file of files) {
     const stats = getStats(`${srcDirectory}/${file}`);
     if (stats.isFile()) {
-      console.log("it's a file");
       const assetSourceFile = file.replace(/\.[a-z0-9]+$/, "");
       const assetPath = findAsset(assetSourceFile);
       if (assetPath) {
-        assets[assetSourceFile] = assetPath;
+        assets[file] = assetPath;
       }
     }
   }
   return assets;
 }
 
-const regexRoot = `${escapeRegExp(cwd())}${sep}portal${sep}`;
+const slash = escapeRegExp(sep);
+const regexRoot = `${escapeRegExp(cwd())}${slash}portal${slash}`;
 const regexItem = "[^/\\\\]+";
 const regexAssetQueries = [
-  `${regexItem}${sep}basic-forms${sep}`,
-  `${regexItem}${sep}advanced-forms${sep}${regexItem}${sep}advanced-form-steps${sep}`,
+  `${regexItem}${slash}basic-forms${slash}`,
+  `${regexItem}${slash}advanced-forms${slash}${regexItem}${slash}advanced-form-steps${slash}`,
 ];
 
 function findAsset(name: string) {

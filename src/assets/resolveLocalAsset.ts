@@ -9,7 +9,7 @@ type AssetWithoutPortalName = Omit<Asset, "portalName">;
 
 export function resolveLocalAsset(portalPath: string, path: string): Asset {
   if (!assets[path]) {
-    const [portalName, type, ...recordPathParts] = path.split("/");
+    const [portalName, type, ...recordPathParts] = path.split(/[\\\\/]/);
     const basePath = join(portalPath, portalName, type);
     let asset: AssetWithoutPortalName;
     switch (type) {
@@ -54,7 +54,6 @@ function resolveAdvancedForm(
   basePath: string,
   recordPathParts: string[]
 ): AssetWithoutPortalName {
-  const advancedFormName = recordPathParts[0];
   if (recordPathParts.length === 0) {
     throwUnsupportedAssetTypeError("advanced-forms");
   }
