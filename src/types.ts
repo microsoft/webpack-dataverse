@@ -1,9 +1,11 @@
 export interface Configuration extends AuthenticationParameters {
   srcPath: string;
   portalPath: string;
-  assets: {
-    [assetName: string]: string;
-  };
+  assets: AssetMap;
+}
+
+export interface AssetMap {
+  [name: string]: string;
 }
 
 export interface AuthenticationParameters {
