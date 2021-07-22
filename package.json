@@ -37,6 +37,7 @@
   "author": "Melody Universe",
   "license": "ISC",
   "repository": {
-    "url": "https://github.com/microsoft/webpack-dataverse"
+    "url": "https://github.com/microsoft/webpack-dataverse",
+    "type": "git"
   }
 }
