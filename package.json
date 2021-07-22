@@ -1,6 +1,10 @@
 {
   "name": "webpack-dataverse",
+<<<<<<< HEAD
   "version": "0.0.0",
+=======
+  "version": "1.0.10",
+>>>>>>> e843ccfeea6ba9ba87c78a460d8f2955c8520471
   "description": "",
   "bin": {
     "dataverse": "dist/index.js"
