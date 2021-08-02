@@ -1,6 +1,6 @@
 {
   "name": "webpack-dataverse",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "bin": {
     "dataverse": "dist/index.js"
@@ -33,7 +33,13 @@
   "scripts": {
     "build": "tsc && ts-node ./addBinComment.ts"
   },
-  "keywords": [],
+  "keywords": [
+    "Microsoft",
+    "Dataverse",
+    "Dynamics",
+    "CRM",
+    "webpack"
+  ],
   "author": "Melody Universe",
   "license": "ISC",
   "repository": {
