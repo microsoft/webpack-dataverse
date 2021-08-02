@@ -1,4 +1,4 @@
-name: CI-CD
+name: Version Bump
 
 on:
   push:
