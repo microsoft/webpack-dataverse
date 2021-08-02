@@ -2,9 +2,15 @@ name: Publish Package
 on:
   release:
     types: [created]
+  workflow_run:
+    workflows: ["Create Release"]
+    branches: [main]
+    types:
+      - completed
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: read
       packages: write
