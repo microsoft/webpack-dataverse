@@ -13,6 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: "Automated Version Bump"
-        uses: "phips28/gh-action-bump-version@master"
+        uses: "phips28/gh-action-bump-version@v9.0.2"
         with:
           tag-prefix: "v"
