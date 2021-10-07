@@ -104,7 +104,6 @@ function createDefaultAssets(srcPath: string, portalPath: string): AssetMap {
 }
 
 const slash = escapeRegExp(sep);
-const regexRoot = `${escapeRegExp(cwd())}${slash}portal${slash}`;
 const regexItem = "[^/\\\\]+";
 const regexAssetQueries = [
   `${regexItem}${slash}basic-forms${slash}`,
@@ -112,10 +111,12 @@ const regexAssetQueries = [
 ];
 
 function findAsset(name: string, portalPath: string) {
+  const portalDirectory = join(cwd(), `${portalPath}${slash}`);
+  const regexRoot = escapeRegExp(portalDirectory);
   for (const regexAssetQuery of regexAssetQueries) {
     const files = findFile(
       new RegExp(`^${regexRoot}${regexAssetQuery}${name}`, "i"),
-      join(cwd(), portalPath)
+      portalDirectory
     );
     if (files.length > 0) {
       return files[0].replace(
