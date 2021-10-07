@@ -1,5 +1,5 @@
 import { AssetMap, Configuration } from "../types";
-import { resolve, sep } from "path";
+import { join, resolve, sep } from "path";
 import {
   existsSync as pathExists,
   readdirSync as readDir,
@@ -31,10 +31,14 @@ function applyDefaultConfiguration(
   if (development) {
     applyDefaultEnvironmentVariables(dataverseConfig);
   }
+  const srcPath = dataverseConfig.srcPath || "src";
+  const portalPath = dataverseConfig.portalPath || "portal";
+  const assets =
+    dataverseConfig.assets || createDefaultAssets(srcPath, portalPath);
   Object.assign(dataverseConfig, {
-    srcPath: dataverseConfig.srcPath || "src",
-    portalPath: dataverseConfig.portalPath || "portal",
-    assets: dataverseConfig.assets || createDefaultAssets(),
+    srcPath,
+    portalPath,
+    assets,
   });
 }
 
@@ -82,15 +86,15 @@ function getRequiredEnvironmentVariable(name: string) {
   return value;
 }
 
-function createDefaultAssets(): AssetMap {
-  const srcDirectory = resolve(cwd(), "src");
+function createDefaultAssets(srcPath: string, portalPath: string): AssetMap {
+  const srcDirectory = resolve(cwd(), srcPath);
   const files = readDir(srcDirectory);
   const assets: AssetMap = {};
   for (const file of files) {
     const stats = getStats(`${srcDirectory}/${file}`);
     if (stats.isFile()) {
       const assetSourceFile = file.replace(/\.[a-z0-9]+$/, "");
-      const assetPath = findAsset(assetSourceFile);
+      const assetPath = findAsset(assetSourceFile, portalPath);
       if (assetPath) {
         assets[file] = assetPath;
       }
@@ -107,11 +111,11 @@ const regexAssetQueries = [
   `${regexItem}${slash}advanced-forms${slash}${regexItem}${slash}advanced-form-steps${slash}`,
 ];
 
-function findAsset(name: string) {
+function findAsset(name: string, portalPath: string) {
   for (const regexAssetQuery of regexAssetQueries) {
     const files = findFile(
       new RegExp(`^${regexRoot}${regexAssetQuery}${name}`, "i"),
-      `${cwd()}/portal`
+      join(cwd(), portalPath)
     );
     if (files.length > 0) {
       return files[0].replace(
