@@ -115,13 +115,14 @@ function findAsset(name: string, portalPath: string) {
   const portalDirectory = join(cwd(), `${portalPath}${slash}`);
   const regexRoot = escapeRegExp(portalDirectory);
   for (const regexAssetQuery of regexAssetQueries) {
+    const escapedName = escapeRegExp(name);
     const files = findFile(
-      new RegExp(`^${regexRoot}${regexAssetQuery}${name}`, "i"),
+      new RegExp(`^${regexRoot}${regexAssetQuery}${escapedName}`, "i"),
       portalDirectory
     );
     if (files.length > 0) {
       return files[0].replace(
-        new RegExp(`^${regexRoot}(${regexAssetQuery}${name}).*$`, "i"),
+        new RegExp(`^${regexRoot}(${regexAssetQuery}${escapedName}).*$`, "i"),
         "$1"
       );
     }
