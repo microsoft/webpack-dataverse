@@ -84,13 +84,16 @@ function resolveWebPage(
 ): AssetWithoutPortalName {
   const webPageName = recordPathParts[0];
   const yamlFilePath = findFile(
-    join(basePath, webPageName, `${webPageName}.webpage.yml`)
+    join(
+      basePath,
+      webPageName,
+      "content-pages",
+      `${webPageName}.en-US.webpage.yml`
+    )
   );
-  const javascriptFilePath = join(
-    basePath,
-    webPageName,
-    "content-pages",
-    `${webPageName}.en-US.webpage.custom_javascript.js`
+  const javascriptFilePath = yamlFilePath.replace(
+    /\.yml$/,
+    ".custom_javascript.js"
   );
   const contents = readFile(yamlFilePath).toString();
   const webPage = yaml.load(contents) as WebPage;
