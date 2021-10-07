@@ -108,6 +108,7 @@ const regexItem = "[^/\\\\]+";
 const regexAssetQueries = [
   `${regexItem}${slash}basic-forms${slash}`,
   `${regexItem}${slash}advanced-forms${slash}${regexItem}${slash}advanced-form-steps${slash}`,
+  `${regexItem}${slash}web-pages${slash}`,
 ];
 
 function findAsset(name: string, portalPath: string) {

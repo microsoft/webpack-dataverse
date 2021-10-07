@@ -1,4 +1,4 @@
-import { AdvancedFormStep, Asset, BasicForm } from "../types";
+import { AdvancedFormStep, Asset, BasicForm, WebPage } from "../types";
 import { join } from "path";
 import { readFileSync as readFile } from "fs";
 import yaml from "js-yaml";
@@ -18,6 +18,9 @@ export function resolveLocalAsset(portalPath: string, path: string): Asset {
         break;
       case "advanced-forms":
         asset = resolveAdvancedForm(basePath, recordPathParts);
+        break;
+      case "web-pages":
+        asset = resolveWebPage(basePath, recordPathParts);
         break;
       default:
         throwUnsupportedAssetTypeError(type);
@@ -71,6 +74,30 @@ function resolveAdvancedForm(
     entityLogicalName: "adx_webformstep",
     contentAttribute: "adx_registerstartupscript",
     id: advancedForm.adx_webformstepid,
+    contentFilePath: javascriptFilePath,
+  };
+}
+
+function resolveWebPage(
+  basePath: string,
+  recordPathParts: string[]
+): AssetWithoutPortalName {
+  const basicFormName = recordPathParts[0];
+  const yamlFilePath = findFile(
+    join(basePath, basicFormName, `${basicFormName}.webpage.yml`)
+  );
+  const javascriptFilePath = join(
+    basePath,
+    basicFormName,
+    "content-pages",
+    `${basicFormName}.en-US.webpage.custom_javascript.js`
+  );
+  const contents = readFile(yamlFilePath).toString();
+  const webPage = yaml.load(contents) as WebPage;
+  return {
+    entityLogicalName: "adx_webpage",
+    contentAttribute: "adx_customjavascript",
+    id: webPage.adx_webpageid,
     contentFilePath: javascriptFilePath,
   };
 }

@@ -29,7 +29,8 @@ export interface Asset {
 export type AssetEntityLogicalName =
   | "adx_entityform"
   | "adx_webfile"
-  | "adx_webformstep";
+  | "adx_webformstep"
+  | "adx_webpage";
 
 export interface BasicForm {
   adx_entityformid: string;
@@ -37,4 +38,8 @@ export interface BasicForm {
 
 export interface AdvancedFormStep {
   adx_webformstepid: string;
+}
+
+export interface WebPage {
+  adx_webpageid: string;
 }
