@@ -9,9 +9,9 @@ import createWebFile from "../../assets/web-files/createWebFile";
 import createWebFileLoader from "../../assets/createWebFileLoader";
 import { Asset } from "../../types";
 
-export default function buildCompiler() {
+export default function buildCompiler(production: boolean) {
   const dataverseConfig = getDataverseConfig();
-  const config = getWebpackConfig();
+  const config = getWebpackConfig(production);
   const entry = {} as EntryObject;
   for (const srcFile of Object.keys(dataverseConfig.assets)) {
     entry[srcFile] = resolve(dataverseConfig.srcPath, srcFile);

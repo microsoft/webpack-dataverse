@@ -1,7 +1,7 @@
 import buildCompiler from "./buildCompiler";
 
-export default function build() {
-  const compiler = buildCompiler();
+export default function build({ production }: BuildOptions) {
+  const compiler = buildCompiler(production);
   compiler.run((error, stats) => {
     if (error) {
       console.error(error);
@@ -20,3 +20,5 @@ export default function build() {
     });
   });
 }
+
+type BuildOptions = { production: boolean };

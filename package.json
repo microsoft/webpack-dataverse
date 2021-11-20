@@ -10,6 +10,7 @@
     "@azure/msal-node": "^1.2.0",
     "@types/find": "^0.2.1",
     "btoa": "^1.2.1",
+    "commander": "^8.3.0",
     "dotenv": "^10.0.0",
     "escape-string-regexp": "^4.0.0",
     "find": "^0.3.0",
