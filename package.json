@@ -15,7 +15,7 @@
     "escape-string-regexp": "^4.0.0",
     "find": "^0.3.0",
     "js-yaml": "^4.1.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.1.1",
     "webpack": "^5.41.1",
     "webpack-dev-middleware": "^5.0.0"
   },
